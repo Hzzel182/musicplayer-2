@@ -1,11 +1,1 @@
-const SONG={title:"Song Title",artist:"Artist",cover:"cover.jpg",audio:"song.mp3"};
-const a=audio,coverEl=cover,bg=document.getElementById("bg");
-title.textContent=SONG.title;artist.textContent=SONG.artist;
-coverEl.src=SONG.cover;bg.style.backgroundImage=`url(${SONG.cover})`;a.src=SONG.audio;
-const fmt=s=>`${Math.floor(s/60)}:${String(Math.floor(s%60)).padStart(2,"0")}`;
-play.onclick=async()=>{if(a.paused){try{await a.play()}catch(e){};document.body.classList.add("playing");play.textContent="❚❚"}else{a.pause();document.body.classList.remove("playing");play.textContent="▶"}};
-a.onloadedmetadata=()=>dur.textContent=fmt(a.duration);
-a.ontimeupdate=()=>{cur.textContent=fmt(a.currentTime);seek.value=a.currentTime/a.duration*100||0};
-seek.oninput=()=>a.currentTime=(seek.value/100)*a.duration;
-vol.oninput=()=>a.volume=vol.value;
-window.addEventListener("load",()=>a.play().then(()=>{document.body.classList.add("playing");play.textContent="❚❚"}).catch(()=>{}));
+// script.js

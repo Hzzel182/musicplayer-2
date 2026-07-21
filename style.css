@@ -821,3 +821,135 @@ RESPONSIVE
 }
 
 }
+/*==================================================
+NOCTIS VISUALIZER V2.2
+==================================================*/
+
+.visualizer{
+
+    width:100%;
+    height:42px;
+
+    display:flex;
+
+    align-items:flex-end;
+
+    justify-content:space-between;
+
+    gap:4px;
+
+    overflow:hidden;
+
+}
+
+.visualizer span{
+
+    flex:1;
+
+    height:10px;
+
+    border-radius:999px;
+
+    background:linear-gradient(
+
+        to top,
+
+        rgba(255,255,255,.35),
+
+        rgba(255,255,255,.95)
+
+    );
+
+    transform-origin:bottom;
+
+    transform:scaleY(.15);
+
+    transition:
+
+        transform .18s linear,
+
+        opacity .18s linear;
+
+    opacity:.85;
+
+}
+
+.player.playing .visualizer span{
+
+    animation:idleBars 900ms ease-in-out infinite;
+
+}
+
+/* pequeñas diferencias */
+
+.visualizer span:nth-child(2){animation-delay:.05s;}
+.visualizer span:nth-child(3){animation-delay:.10s;}
+.visualizer span:nth-child(4){animation-delay:.15s;}
+.visualizer span:nth-child(5){animation-delay:.20s;}
+.visualizer span:nth-child(6){animation-delay:.25s;}
+.visualizer span:nth-child(7){animation-delay:.30s;}
+.visualizer span:nth-child(8){animation-delay:.35s;}
+.visualizer span:nth-child(9){animation-delay:.40s;}
+.visualizer span:nth-child(10){animation-delay:.45s;}
+.visualizer span:nth-child(11){animation-delay:.50s;}
+.visualizer span:nth-child(12){animation-delay:.55s;}
+.visualizer span:nth-child(13){animation-delay:.60s;}
+.visualizer span:nth-child(14){animation-delay:.65s;}
+.visualizer span:nth-child(15){animation-delay:.70s;}
+.visualizer span:nth-child(16){animation-delay:.75s;}
+.visualizer span:nth-child(17){animation-delay:.80s;}
+.visualizer span:nth-child(18){animation-delay:.85s;}
+.visualizer span:nth-child(19){animation-delay:.90s;}
+.visualizer span:nth-child(20){animation-delay:.95s;}
+.visualizer span:nth-child(21){animation-delay:1.00s;}
+.visualizer span:nth-child(22){animation-delay:1.05s;}
+.visualizer span:nth-child(23){animation-delay:1.10s;}
+.visualizer span:nth-child(24){animation-delay:1.15s;}
+.visualizer span:nth-child(25){animation-delay:1.20s;}
+.visualizer span:nth-child(26){animation-delay:1.25s;}
+.visualizer span:nth-child(27){animation-delay:1.30s;}
+.visualizer span:nth-child(28){animation-delay:1.35s;}
+.visualizer span:nth-child(29){animation-delay:1.40s;}
+.visualizer span:nth-child(30){animation-delay:1.45s;}
+.visualizer span:nth-child(31){animation-delay:1.50s;}
+.visualizer span:nth-child(32){animation-delay:1.55s;}
+
+@keyframes idleBars{
+
+    0%{
+
+        transform:scaleY(.18);
+
+    }
+
+    20%{
+
+        transform:scaleY(.95);
+
+    }
+
+    40%{
+
+        transform:scaleY(.35);
+
+    }
+
+    60%{
+
+        transform:scaleY(.80);
+
+    }
+
+    80%{
+
+        transform:scaleY(.22);
+
+    }
+
+    100%{
+
+        transform:scaleY(.18);
+
+    }
+
+}

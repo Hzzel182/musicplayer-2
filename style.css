@@ -198,3 +198,203 @@ body{
     justify-content:space-between;
 
 }
+/* ==========================================
+   NOCTIS PLAYER V2
+   BASE
+========================================== */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html,
+body{
+    width:100%;
+    height:100%;
+}
+
+body{
+
+    font-family:"Inter",sans-serif;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    overflow:hidden;
+
+    background:#090909;
+
+    color:#fff;
+
+}
+
+/* ==========================================
+   BACKGROUND
+========================================== */
+
+.bg{
+
+    position:fixed;
+    inset:0;
+
+    background:url("cover.jpg") center/cover no-repeat;
+
+    transform:scale(1.35);
+
+    filter:
+
+        blur(80px)
+        brightness(.25)
+        saturate(1.4);
+
+}
+
+.bg::before{
+
+    content:"";
+
+    position:absolute;
+    inset:0;
+
+    background:
+
+    radial-gradient(circle at 20% 30%,
+    rgba(255,255,255,.08),
+    transparent 45%),
+
+    linear-gradient(
+    180deg,
+    rgba(0,0,0,.15),
+    rgba(0,0,0,.65));
+
+}
+
+/* ==========================================
+   PLAYER
+========================================== */
+
+.player{
+
+    position:relative;
+
+    width:min(920px,92vw);
+
+    min-height:210px;
+
+    display:flex;
+
+    gap:34px;
+
+    padding:28px;
+
+    border-radius:34px;
+
+    overflow:hidden;
+
+    background:
+
+        rgba(255,255,255,.08);
+
+    border:1px solid rgba(255,255,255,.10);
+
+    backdrop-filter:
+
+        blur(30px)
+        saturate(180%);
+
+    box-shadow:
+
+        0 30px 80px rgba(0,0,0,.55),
+
+        inset 0 1px 0 rgba(255,255,255,.08);
+
+}
+
+/* ==========================================
+   GLOW
+========================================== */
+
+.glow{
+
+    position:absolute;
+
+    width:380px;
+    height:380px;
+
+    left:-120px;
+    top:-80px;
+
+    border-radius:50%;
+
+    background:
+
+    radial-gradient(circle,
+    rgba(255,255,255,.10),
+    transparent 70%);
+
+    filter:blur(30px);
+
+    pointer-events:none;
+
+}
+
+/* ==========================================
+   ALBUM
+========================================== */
+
+.album{
+
+    width:150px;
+    height:150px;
+
+    flex-shrink:0;
+
+    border-radius:26px;
+
+    overflow:hidden;
+
+    box-shadow:
+
+        0 18px 45px rgba(0,0,0,.45);
+
+}
+
+.album img{
+
+    width:100%;
+    height:100%;
+
+    object-fit:cover;
+
+    display:block;
+
+    transition:
+
+        transform .6s ease;
+
+}
+
+.player.playing .album img{
+
+    transform:scale(1.05);
+
+}
+
+/* ==========================================
+   INFO
+========================================== */
+
+.info{
+
+    flex:1;
+
+    display:flex;
+
+    flex-direction:column;
+
+    justify-content:space-between;
+
+}

@@ -1,15 +1,16 @@
 /*==================================================
-NOCTIS PLAYER V2.2
-PARTE 1
+NOCTIS PLAYER V5
+PART 1
 ==================================================*/
 
 const audio = document.getElementById("audio");
 
 const player = document.querySelector(".player");
 
-const play = document.getElementById("play");
-const prev = document.getElementById("prev");
-const next = document.getElementById("next");
+const playBtn = document.getElementById("play");
+const prevBtn = document.getElementById("prev");
+const nextBtn = document.getElementById("next");
+const loopBtn = document.getElementById("loop");
 
 const currentTimeLabel = document.getElementById("currentTime");
 const durationLabel = document.getElementById("duration");
@@ -23,6 +24,14 @@ const volume = document.getElementById("volume");
 const bars = document.querySelectorAll(".visualizer span");
 
 /*==================================================
+STATE
+==================================================*/
+
+let loopEnabled = false;
+
+let visualizerTimer = null;
+
+/*==================================================
 TIME
 ==================================================*/
 
@@ -30,8 +39,9 @@ function formatTime(seconds){
 
     if(isNaN(seconds)) return "0:00";
 
-    const m = Math.floor(seconds/60);
-    const s = Math.floor(seconds%60);
+    const m = Math.floor(seconds / 60);
+
+    const s = Math.floor(seconds % 60);
 
     return `${m}:${String(s).padStart(2,"0")}`;
 
@@ -55,6 +65,8 @@ window.addEventListener("load",()=>{
 
     audio.volume = 1;
 
+    volume.value = 100;
+
     tryAutoplay();
 
 });
@@ -65,21 +77,23 @@ async function tryAutoplay(){
 
         await audio.play();
 
-    }catch(e){
+    }
 
-        console.log("Autoplay bloqueado por el navegador.");
+    catch(error){
+
+        console.log("Autoplay bloqueado.");
 
     }
 
 }
 
 /*==================================================
-REINTENTO
+AUTOPLAY RETRY
 ==================================================*/
 
-["pointerdown","click","touchstart","keydown"].forEach(evt=>{
+["click","pointerdown","touchstart","keydown"].forEach(event=>{
 
-    window.addEventListener(evt,()=>{
+    window.addEventListener(event,()=>{
 
         if(audio.paused){
 
@@ -95,13 +109,15 @@ REINTENTO
 PLAY / PAUSE
 ==================================================*/
 
-play.addEventListener("click",()=>{
+playBtn.addEventListener("click",()=>{
 
     if(audio.paused){
 
         audio.play();
 
-    }else{
+    }
+
+    else{
 
         audio.pause();
 
@@ -111,20 +127,53 @@ play.addEventListener("click",()=>{
 
 audio.addEventListener("play",()=>{
 
-    play.textContent="⏸";
-
     player.classList.add("playing");
+
+    playBtn.textContent = "⏸";
 
 });
 
 audio.addEventListener("pause",()=>{
 
-    play.textContent="▶";
-
     player.classList.remove("playing");
+
+    playBtn.textContent = "▶";
 
 });
 
+/*==================================================
+PREVIOUS
+==================================================*/
+
+prevBtn.addEventListener("click",()=>{
+
+    audio.currentTime = 0;
+
+});
+
+/*==================================================
+NEXT
+==================================================*/
+
+nextBtn.addEventListener("click",()=>{
+
+    audio.currentTime = audio.duration;
+
+});
+
+/*==================================================
+LOOP
+==================================================*/
+
+loopBtn.addEventListener("click",()=>{
+
+    loopEnabled = !loopEnabled;
+
+    audio.loop = loopEnabled;
+
+    loopBtn.classList.toggle("active",loopEnabled);
+
+});
 /*==================================================
 TIME UPDATE
 ==================================================*/
@@ -133,77 +182,83 @@ audio.addEventListener("timeupdate",()=>{
 
     currentTimeLabel.textContent = formatTime(audio.currentTime);
 
-    if(audio.duration){
+    if(!audio.duration) return;
 
-        const percent = (audio.currentTime/audio.duration)*100;
+    const percent = (audio.currentTime / audio.duration) * 100;
 
-        seekFill.style.width = percent+"%";
+    seekFill.style.width = percent + "%";
 
-        seekThumb.style.left = percent+"%";
-
-    }
+    seekThumb.style.left = percent + "%";
 
 });
-/*==================================================
-NOCTIS PLAYER V2.2
-PARTE 2
-==================================================*/
 
-/*==============================
+/*==================================================
 SEEKBAR
-==============================*/
+==================================================*/
 
 seekbar.addEventListener("click",(e)=>{
 
     if(!audio.duration) return;
 
-    const rect=seekbar.getBoundingClientRect();
+    const rect = seekbar.getBoundingClientRect();
 
-    const percent=(e.clientX-rect.left)/rect.width;
+    const percent = (e.clientX - rect.left) / rect.width;
 
-    audio.currentTime=percent*audio.duration;
+    audio.currentTime = percent * audio.duration;
 
 });
 
-/*==============================
+/*==================================================
+DRAG SEEKBAR
+==================================================*/
+
+let dragging = false;
+
+seekThumb.addEventListener("pointerdown",()=>{
+
+    dragging = true;
+
+});
+
+window.addEventListener("pointerup",()=>{
+
+    dragging = false;
+
+});
+
+window.addEventListener("pointermove",(e)=>{
+
+    if(!dragging) return;
+
+    if(!audio.duration) return;
+
+    const rect = seekbar.getBoundingClientRect();
+
+    let percent = (e.clientX - rect.left) / rect.width;
+
+    percent = Math.max(0,Math.min(1,percent));
+
+    audio.currentTime = percent * audio.duration;
+
+});
+
+/*==================================================
 VOLUME
-==============================*/
+==================================================*/
 
 volume.addEventListener("input",()=>{
 
-    audio.volume=volume.value/100;
+    audio.volume = volume.value / 100;
 
 });
 
-/*==============================
-PREV
-==============================*/
-
-prev.addEventListener("click",()=>{
-
-    audio.currentTime=0;
-
-});
-
-/*==============================
-NEXT
-==============================*/
-
-next.addEventListener("click",()=>{
-
-    audio.currentTime=audio.duration;
-
-});
-
-/*==============================
+/*==================================================
 VISUALIZER
-==============================*/
+==================================================*/
 
-let visualizerLoop=null;
+function randomBar(){
 
-function randomHeight(){
-
-    return (Math.random()*0.9)+0.15;
+    return .15 + Math.random() * .85;
 
 }
 
@@ -213,9 +268,9 @@ function animateBars(){
 
         bars.forEach(bar=>{
 
-            bar.style.transform="scaleY(.15)";
+            bar.style.transform = "scaleY(.18)";
 
-            bar.style.opacity=".45";
+            bar.style.opacity = ".45";
 
         });
 
@@ -225,21 +280,17 @@ function animateBars(){
 
     bars.forEach(bar=>{
 
-        const h=randomHeight();
+        bar.style.transform = `scaleY(${randomBar()})`;
 
-        const o=0.45+Math.random()*0.55;
-
-        bar.style.transform=`scaleY(${h})`;
-
-        bar.style.opacity=o;
+        bar.style.opacity = (.45 + Math.random() * .55);
 
     });
 
-    visualizerLoop=setTimeout(
+    visualizerTimer = setTimeout(
 
         animateBars,
 
-        120
+        95
 
     );
 
@@ -247,7 +298,7 @@ function animateBars(){
 
 audio.addEventListener("play",()=>{
 
-    clearTimeout(visualizerLoop);
+    clearTimeout(visualizerTimer);
 
     animateBars();
 
@@ -255,55 +306,57 @@ audio.addEventListener("play",()=>{
 
 audio.addEventListener("pause",()=>{
 
-    clearTimeout(visualizerLoop);
-
-    bars.forEach(bar=>{
-
-        bar.style.transform="scaleY(.15)";
-
-        bar.style.opacity=".45";
-
-    });
+    clearTimeout(visualizerTimer);
 
 });
 
-/*==============================
+/*==================================================
 ENDED
-==============================*/
+==================================================*/
 
 audio.addEventListener("ended",()=>{
 
-    play.textContent="▶";
+    if(loopEnabled){
+
+        audio.currentTime = 0;
+
+        audio.play();
+
+        return;
+
+    }
+
+    playBtn.textContent = "▶";
 
     player.classList.remove("playing");
 
 });
 
-/*==============================
+/*==================================================
 STARTUP
-==============================*/
+==================================================*/
 
 bars.forEach(bar=>{
 
-    bar.style.transform="scaleY(.15)";
+    bar.style.transform = "scaleY(.18)";
 
-    bar.style.opacity=".45";
+    bar.style.opacity = ".45";
 
 });
 
-volume.value=100;
+audio.volume = 1;
 
-audio.volume=1;
+volume.value = 100;
 
-/*==============================
-AUTOPLAY EXTRA
-==============================*/
+/*==================================================
+KEEP ALIVE
+==================================================*/
 
 document.addEventListener("visibilitychange",()=>{
 
     if(
 
-        document.visibilityState==="visible" &&
+        document.visibilityState === "visible" &&
 
         audio.paused
 
@@ -325,8 +378,8 @@ window.addEventListener("pageshow",()=>{
 
 });
 
-/*==============================
+/*==================================================
 READY
-==============================*/
+==================================================*/
 
-console.log("Noctis Player V2.2 Ready");
+console.log("🎵 Noctis Player V5 Ready");

@@ -4,12 +4,16 @@
     padding: 0;
 }
 
-body {
-    background-color: transparent;
+html, body {
+    width: 100%;
+    height: 100%;
+    background-color: #121214; /* Fondo negro idéntico al reproductor para que se funda en Notion */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
     color: #e0e0e0;
-    /* Eliminamos el height: 100vh y el flex de la pantalla completa para que no ocupe espacio extra */
-    display: inline-block;
 }
 
 .player-container {

@@ -3,189 +3,139 @@
 
 <head>
 
-    <meta charset="UTF-8">
+<meta charset="UTF-8">
 
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1.0">
+<meta name="viewport"
+content="width=device-width,initial-scale=1.0">
 
-    <title>Premium Music Player</title>
+<title>Premium Music Player</title>
 
-    <link rel="preconnect"
-          href="https://fonts.googleapis.com">
+<link rel="preconnect"
+href="https://fonts.googleapis.com">
 
-    <link rel="preconnect"
-          href="https://fonts.gstatic.com"
-          crossorigin>
+<link rel="preconnect"
+href="https://fonts.gstatic.com"
+crossorigin>
 
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
-          rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+rel="stylesheet">
 
-    <link rel="stylesheet"
-          href="style.css">
+<link rel="stylesheet"
+href="style.css">
 
 </head>
 
 <body>
 
-    <!-- Fondo -->
+<div class="background"></div>
 
-    <div class="background">
+<div class="player">
 
-        <div class="background-image"></div>
+<div class="glass">
 
-        <div class="background-gradient"></div>
+<!-- PORTADA -->
 
-    </div>
+<div class="cover">
 
-    <!-- PLAYER -->
+<img
+id="cover"
+src="cover.jpg"
+alt="cover">
 
-    <main class="player">
+</div>
 
-        <div class="glass">
+<!-- INFORMACIÓN -->
 
-            <!-- PORTADA -->
+<div class="content">
 
-            <section class="cover-section">
+<div class="header">
 
-                <div class="cover-ring">
+<h1 id="title">
 
-                    <img
-                        id="cover"
-                        src="cover.jpg"
-                        alt="Cover">
+Eternally
 
-                </div>
+</h1>
 
-            </section>
+<p id="artist">
 
-            <!-- TITULO -->
+TXT
 
-            <section class="song-info">
+</p>
 
-                <h1 id="title">
+</div>
 
-                    Eternally
+<div class="visualizer">
 
-                </h1>
+<span></span><span></span><span></span><span></span>
+<span></span><span></span><span></span><span></span>
+<span></span><span></span><span></span><span></span>
+<span></span><span></span><span></span><span></span>
 
-                <p id="artist">
+</div>
 
-                    TXT
+<div class="progress">
 
-                </p>
+<span id="current">
 
-            </section>
+0:00
 
-            <!-- VISUALIZER -->
+</span>
 
-            <section class="visualizer">
+<div id="progressBar">
 
-                <span></span>
+<div id="progressFill"></div>
 
-                <span></span>
+<div id="progressThumb"></div>
 
-                <span></span>
+</div>
 
-                <span></span>
+<span id="duration">
 
-                <span></span>
+0:00
 
-                <span></span>
+</span>
 
-                <span></span>
+</div>
 
-                <span></span>
+<div class="controls">
 
-                <span></span>
+<button id="previous">
 
-                <span></span>
+◀◀
 
-                <span></span>
+</button>
 
-                <span></span>
+<button id="play">
 
-            </section>
+▶
 
-            <!-- PROGRESO -->
+</button>
 
-            <section class="progress-wrapper">
+<button id="next">
 
-                <span id="currentTime">
+▶▶
 
-                    0:00
+</button>
 
-                </span>
+</div>
 
-                <div id="progressBar">
+</div>
 
-                    <div id="progress"></div>
+</div>
 
-                    <div id="progressThumb"></div>
+</div>
 
-                </div>
+<audio
+id="audio"
+preload="metadata">
 
-                <span id="duration">
+<source
+src="song.mp3"
+type="audio/mpeg">
 
-                    0:00
+</audio>
 
-                </span>
-
-            </section>
-
-            <!-- CONTROLES -->
-
-            <section class="controls">
-
-                <button
-                    id="playButton">
-
-                    <svg id="playIcon"
-                         viewBox="0 0 24 24">
-
-                        <path d="M8 5v14l11-7z"/>
-
-                    </svg>
-
-                </button>
-
-            </section>
-
-            <!-- VOLUMEN -->
-
-            <section class="volume">
-
-                <svg
-                    viewBox="0 0 24 24">
-
-                    <path d="M5 9v6h4l5 4V5L9 9H5z"/>
-
-                </svg>
-
-                <div id="volumeBar">
-
-                    <div id="volumeProgress"></div>
-
-                    <div id="volumeThumb"></div>
-
-                </div>
-
-            </section>
-
-        </div>
-
-    </main>
-
-    <audio
-        id="audio"
-        preload="metadata">
-
-        <source
-            src="song.mp3"
-            type="audio/mpeg">
-
-    </audio>
-
-    <script src="script.js"></script>
+<script src="script.js"></script>
 
 </body>
 

@@ -398,3 +398,281 @@ body{
     justify-content:space-between;
 
 }
+/* ==========================================
+   VOLUME
+========================================== */
+
+.volume{
+
+    margin-left:auto;
+
+    display:flex;
+
+    align-items:center;
+
+    gap:14px;
+
+}
+
+.volume svg{
+
+    width:18px;
+    height:18px;
+
+    fill:white;
+
+    opacity:.75;
+
+}
+
+#volume{
+
+    width:130px;
+
+    cursor:pointer;
+
+    accent-color:white;
+
+}
+
+/* ==========================================
+   HOVER EFFECTS
+========================================== */
+
+.album{
+
+    transition:
+        transform .35s ease,
+        box-shadow .35s ease;
+
+}
+
+.album:hover{
+
+    transform:translateY(-4px);
+
+    box-shadow:
+
+        0 28px 60px rgba(0,0,0,.55);
+
+}
+
+.controls button:active{
+
+    transform:scale(.94);
+
+}
+
+#play{
+
+    transition:
+        transform .25s ease,
+        box-shadow .25s ease;
+
+}
+
+#play:hover{
+
+    transform:translateY(-3px) scale(1.05);
+
+    box-shadow:
+
+        0 0 30px rgba(255,255,255,.35);
+
+}
+
+/* ==========================================
+   PLAYER ANIMATION
+========================================== */
+
+.player{
+
+    animation:fadeUp .8s ease;
+
+}
+
+@keyframes fadeUp{
+
+    from{
+
+        opacity:0;
+
+        transform:
+
+            translateY(40px)
+            scale(.97);
+
+    }
+
+    to{
+
+        opacity:1;
+
+        transform:
+
+            translateY(0)
+            scale(1);
+
+    }
+
+}
+
+/* ==========================================
+   PLAYING ANIMATION
+========================================== */
+
+.player.playing .live-dot{
+
+    animation:pulse 1.4s infinite;
+
+}
+
+@keyframes pulse{
+
+    0%{
+
+        transform:scale(1);
+
+        opacity:1;
+
+    }
+
+    50%{
+
+        transform:scale(1.6);
+
+        opacity:.45;
+
+    }
+
+    100%{
+
+        transform:scale(1);
+
+        opacity:1;
+
+    }
+
+}
+
+/* ==========================================
+   SCROLLBAR
+========================================== */
+
+::-webkit-scrollbar{
+
+    width:8px;
+
+}
+
+::-webkit-scrollbar-thumb{
+
+    background:#555;
+
+    border-radius:999px;
+
+}
+
+/* ==========================================
+   RESPONSIVE
+========================================== */
+
+@media (max-width:900px){
+
+.player{
+
+    width:95vw;
+
+}
+
+}
+
+@media (max-width:760px){
+
+.player{
+
+    flex-direction:column;
+
+    align-items:center;
+
+    padding:28px;
+
+    gap:28px;
+
+}
+
+.album{
+
+    width:190px;
+
+    height:190px;
+
+}
+
+.song{
+
+    flex-direction:column;
+
+    align-items:center;
+
+    text-align:center;
+
+}
+
+.timeline{
+
+    width:100%;
+
+}
+
+.controls{
+
+    flex-wrap:wrap;
+
+    justify-content:center;
+
+}
+
+.volume{
+
+    margin:0;
+
+}
+
+#visualizer{
+
+    display:none;
+
+}
+
+}
+
+@media (max-width:500px){
+
+.player{
+
+    border-radius:24px;
+
+    padding:22px;
+
+}
+
+.song h1{
+
+    font-size:1.6rem;
+
+}
+
+.song h2{
+
+    font-size:.95rem;
+
+}
+
+#volume{
+
+    width:100px;
+
+}
+
+}

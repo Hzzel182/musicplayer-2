@@ -1,26 +1,49 @@
+/*==================================================
+NOCTIS PLAYER V2.1
+PARTE 1
+==================================================*/
+
 :root{
 
     --bg:#090909;
-    --card:rgba(22,22,22,.68);
-    --border:rgba(255,255,255,.08);
+
+    --glass:rgba(18,18,18,.62);
+
+    --glassBorder:rgba(255,255,255,.08);
 
     --text:#ffffff;
+
     --sub:#bdbdbd;
+
+    --line:rgba(255,255,255,.10);
 
     --accent:#ffffff;
 
+    --radius:28px;
+
+    --transition:.35s ease;
+
 }
 
+/*==================================================
+RESET
+==================================================*/
+
 *{
+
     margin:0;
+
     padding:0;
+
     box-sizing:border-box;
+
 }
 
 html,
 body{
 
     width:100%;
+
     height:100%;
 
 }
@@ -29,99 +52,157 @@ body{
 
     font-family:"Inter",sans-serif;
 
-    display:flex;
-    justify-content:center;
-    align-items:center;
-
-    overflow:hidden;
-
     background:var(--bg);
 
     color:var(--text);
 
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    overflow:hidden;
+
 }
 
-/*==============================
+/*==================================================
 BACKGROUND
-==============================*/
+==================================================*/
 
 .background{
 
     position:fixed;
+
     inset:0;
 
-    background:url("cover.jpg") center/cover no-repeat;
+    background:url("cover.jpg") center center/cover no-repeat;
 
-    transform:scale(1.35);
+    transform:scale(1.30);
 
     filter:
-        blur(80px)
-        brightness(.22)
-        saturate(1.35);
+
+        blur(90px)
+
+        brightness(.35)
+
+        saturate(1.55);
 
 }
 
-.background::after{
+.background-overlay{
 
-    content:"";
+    position:fixed;
 
-    position:absolute;
     inset:0;
 
-    background:linear-gradient(
+    background:
 
-        rgba(0,0,0,.25),
+        radial-gradient(circle at 20% 20%,
 
-        rgba(0,0,0,.68)
+        rgba(255,255,255,.05),
 
-    );
+        transparent 45%),
+
+        linear-gradient(
+
+        rgba(0,0,0,.18),
+
+        rgba(0,0,0,.72));
 
 }
 
-/*==============================
+/*==================================================
 PLAYER
-==============================*/
+==================================================*/
 
 .player{
 
     position:relative;
 
+    z-index:10;
+
     width:min(930px,92vw);
 
-    min-height:235px;
+    min-height:240px;
 
     display:grid;
 
-    grid-template-columns:155px 1fr;
+    grid-template-columns:160px 1fr;
 
-    gap:32px;
+    gap:40px;
 
-    padding:28px;
+    padding:30px;
 
-    border-radius:30px;
+    border-radius:var(--radius);
 
     overflow:hidden;
 
-    background:var(--card);
+    background:var(--glass);
 
-    backdrop-filter:blur(28px);
+    border:1px solid var(--glassBorder);
 
-    border:1px solid var(--border);
+    backdrop-filter:
+
+        blur(28px)
+
+        saturate(180%);
 
     box-shadow:
 
-        0 25px 60px rgba(0,0,0,.45);
+        0 35px 80px rgba(0,0,0,.55),
+
+        inset 0 1px 0 rgba(255,255,255,.05);
+
+    animation:fadeUp .7s ease;
 
 }
 
-/*==============================
+/*==================================================
+GLOW
+==================================================*/
+
+.glow{
+
+    position:absolute;
+
+    left:-120px;
+
+    top:-120px;
+
+    width:360px;
+
+    height:360px;
+
+    border-radius:50%;
+
+    background:
+
+        radial-gradient(circle,
+
+        rgba(255,255,255,.12),
+
+        transparent 70%);
+
+    filter:blur(35px);
+
+    pointer-events:none;
+
+    opacity:.65;
+
+}
+
+/*==================================================
 ALBUM
-==============================*/
+==================================================*/
 
 .album{
 
-    width:155px;
-    height:155px;
+    position:relative;
+
+    width:160px;
+
+    height:160px;
 
     border-radius:24px;
 
@@ -129,20 +210,29 @@ ALBUM
 
     box-shadow:
 
-        0 15px 35px rgba(0,0,0,.45);
+        0 18px 45px rgba(0,0,0,.45);
+
+    transition:transform var(--transition);
+
+}
+
+.album:hover{
+
+    transform:translateY(-4px);
 
 }
 
 .album img{
 
     width:100%;
+
     height:100%;
 
     object-fit:cover;
 
     display:block;
 
-    transition:.45s;
+    transition:transform .6s ease;
 
 }
 
@@ -152,9 +242,9 @@ ALBUM
 
 }
 
-/*==============================
+/*==================================================
 CONTENT
-==============================*/
+==================================================*/
 
 .content{
 
@@ -164,15 +254,14 @@ CONTENT
 
     justify-content:space-between;
 
-    gap:18px;
+    gap:20px;
 
 }
+/*==================================================
+HEADER
+==================================================*/
 
-/*==============================
-TOP
-==============================*/
-
-.top{
+.header{
 
     display:flex;
 
@@ -180,19 +269,33 @@ TOP
 
     align-items:flex-start;
 
+    gap:20px;
+
 }
 
-h1{
+.song{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:6px;
+
+}
+
+.song h1{
 
     font-size:2rem;
 
     font-weight:700;
 
+    letter-spacing:-.03em;
+
+    line-height:1;
+
 }
 
-h2{
-
-    margin-top:6px;
+.song h2{
 
     color:var(--sub);
 
@@ -202,9 +305,9 @@ h2{
 
 }
 
-/*==============================
+/*==================================================
 STATUS
-==============================*/
+==================================================*/
 
 .status{
 
@@ -216,90 +319,176 @@ STATUS
 
     font-size:.78rem;
 
-    letter-spacing:.15em;
+    letter-spacing:.18em;
 
-    opacity:.8;
+    color:#d5d5d5;
+
+    user-select:none;
 
 }
 
-.dot{
+.live-dot{
 
-    width:8px;
-    height:8px;
+    width:9px;
+
+    height:9px;
 
     border-radius:50%;
 
-    background:white;
+    background:#48ff87;
 
-    animation:pulse 1.5s infinite;
+    box-shadow:
+
+        0 0 12px #48ff87,
+
+        0 0 24px rgba(72,255,135,.45);
 
 }
 
-/*==============================
+.player.playing .live-dot{
+
+    animation:pulse 1.3s infinite;
+
+}
+
+/*==================================================
 VISUALIZER
-==============================*/
+==================================================*/
 
 #visualizer{
 
     width:100%;
 
-    height:55px;
+    height:42px;
 
-    border-radius:12px;
+    border-radius:14px;
 
-    background:rgba(255,255,255,.03);
+    display:block;
+
+    background:
+
+        linear-gradient(
+
+        rgba(255,255,255,.04),
+
+        rgba(255,255,255,.02));
 
 }
 
-/*==============================
+/*==================================================
 TIMELINE
-==============================*/
+==================================================*/
 
 .timeline{
 
     display:grid;
 
-    grid-template-columns:45px 1fr 45px;
+    grid-template-columns:
+
+        46px
+
+        1fr
+
+        46px;
+
+    gap:16px;
 
     align-items:center;
 
-    gap:14px;
+}
+
+.timeline span{
 
     font-size:.82rem;
 
+    color:#d0d0d0;
+
+    font-variant-numeric:tabular-nums;
+
 }
 
-.progress{
+/*==================================================
+SEEKBAR
+==================================================*/
 
-    height:6px;
+.seekbar{
+
+    position:relative;
+
+    height:8px;
 
     border-radius:999px;
 
     overflow:hidden;
 
-    background:rgba(255,255,255,.12);
-
     cursor:pointer;
+
+    background:
+
+        rgba(255,255,255,.10);
 
 }
 
-.progress-fill{
+#seekFill{
+
+    position:absolute;
+
+    left:0;
+
+    top:0;
 
     width:0%;
 
     height:100%;
 
-    background:white;
-
     border-radius:999px;
+
+    background:
+
+        linear-gradient(
+
+        90deg,
+
+        rgba(255,255,255,.95),
+
+        rgba(255,255,255,.65));
+
+    transition:width .08s linear;
 
 }
 
-/*==============================
-BOTTOM
-==============================*/
+#seekThumb{
 
-.bottom{
+    position:absolute;
+
+    top:50%;
+
+    left:0%;
+
+    width:16px;
+
+    height:16px;
+
+    border-radius:50%;
+
+    background:white;
+
+    transform:
+
+        translate(-50%,-50%);
+
+    box-shadow:
+
+        0 0 15px rgba(255,255,255,.45);
+
+    transition:left .08s linear;
+
+}
+/*==================================================
+CONTROLS
+==================================================*/
+
+.controls{
 
     display:flex;
 
@@ -307,65 +496,91 @@ BOTTOM
 
     align-items:center;
 
+    gap:20px;
+
 }
 
-/*==============================
-CONTROLS
-==============================*/
-
-.controls{
+.buttons{
 
     display:flex;
 
     align-items:center;
 
-    gap:14px;
+    gap:16px;
 
 }
 
-.controls button{
+.buttons button{
 
     border:none;
 
-    background:none;
+    background:transparent;
 
     color:white;
 
     cursor:pointer;
 
-    font-size:1.2rem;
+    transition:all .25s ease;
 
-    transition:.25s;
+    font-size:1.45rem;
+
+    opacity:.85;
 
 }
 
-.controls button:hover{
+.buttons button:hover{
 
-    transform:scale(1.1);
+    opacity:1;
+
+    transform:scale(1.12);
+
+}
+
+.buttons button:active{
+
+    transform:scale(.92);
 
 }
 
 #play{
 
-    width:54px;
+    width:48px;
 
-    height:54px;
+    height:48px;
 
     border-radius:50%;
 
     background:white;
 
-    color:black;
+    color:#111;
 
-    font-size:1.35rem;
+    font-size:1.15rem;
 
-    font-weight:bold;
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    box-shadow:
+
+        0 0 25px rgba(255,255,255,.25);
 
 }
 
-/*==============================
+#play:hover{
+
+    transform:scale(1.08);
+
+    box-shadow:
+
+        0 0 40px rgba(255,255,255,.35);
+
+}
+
+/*==================================================
 VOLUME
-==============================*/
+==================================================*/
 
 .volume{
 
@@ -377,25 +592,47 @@ VOLUME
 
 }
 
+.volume span{
+
+    font-size:1rem;
+
+    opacity:.75;
+
+}
+
 #volume{
 
     width:120px;
+
+    height:4px;
+
+    cursor:pointer;
 
     accent-color:white;
 
 }
 
-/*==============================
-ANIMATION
-==============================*/
+/*==================================================
+PLAYING EFFECTS
+==================================================*/
 
-.player{
+.player.playing .album{
 
-    animation:show .8s ease;
+    animation:albumFloat 4s ease-in-out infinite;
 
 }
 
-@keyframes show{
+.player.playing .glow{
+
+    animation:glowPulse 4s ease-in-out infinite;
+
+}
+
+/*==================================================
+ANIMATIONS
+==================================================*/
+
+@keyframes fadeUp{
 
     from{
 
@@ -403,7 +640,7 @@ ANIMATION
 
         transform:
 
-            translateY(35px)
+            translateY(30px)
 
             scale(.96);
 
@@ -451,15 +688,69 @@ ANIMATION
 
 }
 
-/*==============================
-RESPONSIVE
-==============================*/
+@keyframes albumFloat{
 
-@media(max-width:760px){
+    0%{
+
+        transform:translateY(0px);
+
+    }
+
+    50%{
+
+        transform:translateY(-6px);
+
+    }
+
+    100%{
+
+        transform:translateY(0px);
+
+    }
+
+}
+
+@keyframes glowPulse{
+
+    0%{
+
+        opacity:.45;
+
+        transform:scale(1);
+
+    }
+
+    50%{
+
+        opacity:.9;
+
+        transform:scale(1.08);
+
+    }
+
+    100%{
+
+        opacity:.45;
+
+        transform:scale(1);
+
+    }
+
+}
+
+/*==================================================
+RESPONSIVE
+==================================================*/
+
+@media (max-width:760px){
 
 .player{
 
+    width:95vw;
+
     grid-template-columns:1fr;
+
+    gap:28px;
 
     text-align:center;
 
@@ -471,17 +762,21 @@ RESPONSIVE
 
 }
 
-.top{
+.header{
 
     flex-direction:column;
 
     align-items:center;
 
-    gap:18px;
+}
+
+.timeline{
+
+    grid-template-columns:42px 1fr 42px;
 
 }
 
-.bottom{
+.controls{
 
     flex-direction:column;
 
@@ -489,9 +784,39 @@ RESPONSIVE
 
 }
 
-.timeline{
+.volume{
 
-    grid-template-columns:42px 1fr 42px;
+    justify-content:center;
+
+}
+
+.song h1{
+
+    font-size:1.7rem;
+
+}
+
+}
+
+@media (max-width:500px){
+
+.player{
+
+    padding:22px;
+
+}
+
+.album{
+
+    width:140px;
+
+    height:140px;
+
+}
+
+#volume{
+
+    width:90px;
 
 }
 

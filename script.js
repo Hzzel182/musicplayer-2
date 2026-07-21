@@ -1,66 +1,37 @@
 /*==================================================
-NOCTIS PLAYER V2.1
+NOCTIS PLAYER V2.2
 PARTE 1
 ==================================================*/
 
-const audio=document.getElementById("audio");
+const audio = document.getElementById("audio");
 
-const player=document.querySelector(".player");
+const player = document.querySelector(".player");
 
-const play=document.getElementById("play");
-const prev=document.getElementById("prev");
-const next=document.getElementById("next");
+const play = document.getElementById("play");
+const prev = document.getElementById("prev");
+const next = document.getElementById("next");
 
-const currentTimeLabel=document.getElementById("currentTime");
-const durationLabel=document.getElementById("duration");
+const currentTimeLabel = document.getElementById("currentTime");
+const durationLabel = document.getElementById("duration");
 
-const seekbar=document.getElementById("seekbar");
-const seekFill=document.getElementById("seekFill");
-const seekThumb=document.getElementById("seekThumb");
+const seekbar = document.getElementById("seekbar");
+const seekFill = document.getElementById("seekFill");
+const seekThumb = document.getElementById("seekThumb");
 
-const volume=document.getElementById("volume");
+const volume = document.getElementById("volume");
 
-const cover=document.getElementById("cover");
-
-const canvas=document.getElementById("visualizer");
-const ctx=canvas.getContext("2d");
-
-let audioContext=null;
-let analyser=null;
-let source=null;
-let frequencyData=null;
-
-let animationFrame=null;
-
-let started=false;
+const bars = document.querySelectorAll(".visualizer span");
 
 /*==================================================
-CANVAS
-==================================================*/
-
-function resizeCanvas(){
-
-    canvas.width=canvas.clientWidth;
-
-    canvas.height=canvas.clientHeight;
-
-}
-
-window.addEventListener("resize",resizeCanvas);
-
-resizeCanvas();
-
-/*==================================================
-TIME FORMAT
+TIME
 ==================================================*/
 
 function formatTime(seconds){
 
     if(isNaN(seconds)) return "0:00";
 
-    const m=Math.floor(seconds/60);
-
-    const s=Math.floor(seconds%60);
+    const m = Math.floor(seconds/60);
+    const s = Math.floor(seconds%60);
 
     return `${m}:${String(s).padStart(2,"0")}`;
 
@@ -72,7 +43,7 @@ LOAD
 
 audio.addEventListener("loadedmetadata",()=>{
 
-    durationLabel.textContent=formatTime(audio.duration);
+    durationLabel.textContent = formatTime(audio.duration);
 
 });
 
@@ -82,43 +53,37 @@ AUTOPLAY
 
 window.addEventListener("load",()=>{
 
-    audio.volume=1;
+    audio.volume = 1;
 
-    audio.preload="auto";
-
-    attemptAutoplay();
+    tryAutoplay();
 
 });
 
-async function attemptAutoplay(){
+async function tryAutoplay(){
 
     try{
 
         await audio.play();
 
-        onPlay();
+    }catch(e){
 
-    }
-
-    catch(e){
-
-        console.log("Autoplay bloqueado");
+        console.log("Autoplay bloqueado por el navegador.");
 
     }
 
 }
 
 /*==================================================
-USER INTERACTION
+REINTENTO
 ==================================================*/
 
-["click","touchstart","keydown"].forEach(event=>{
+["pointerdown","click","touchstart","keydown"].forEach(evt=>{
 
-    window.addEventListener(event,()=>{
+    window.addEventListener(evt,()=>{
 
         if(audio.paused){
 
-            attemptAutoplay();
+            audio.play().catch(()=>{});
 
         }
 
@@ -127,7 +92,7 @@ USER INTERACTION
 });
 
 /*==================================================
-PLAY BUTTON
+PLAY / PAUSE
 ==================================================*/
 
 play.addEventListener("click",()=>{
@@ -136,78 +101,29 @@ play.addEventListener("click",()=>{
 
         audio.play();
 
-        onPlay();
-
     }else{
 
         audio.pause();
-
-        onPause();
 
     }
 
 });
 
-/*==================================================
-PLAY
-==================================================*/
-
-function onPlay(){
+audio.addEventListener("play",()=>{
 
     play.textContent="⏸";
 
     player.classList.add("playing");
 
-    if(!started){
+});
 
-        setupAudio();
-
-        started=true;
-
-    }
-
-    renderVisualizer();
-
-}
-
-/*==================================================
-PAUSE
-==================================================*/
-
-function onPause(){
+audio.addEventListener("pause",()=>{
 
     play.textContent="▶";
 
     player.classList.remove("playing");
 
-    cancelAnimationFrame(animationFrame);
-
-}
-
-audio.addEventListener("pause",onPause);
-
-audio.addEventListener("ended",onPause);
-/*==================================================
-SETUP AUDIO
-==================================================*/
-
-function setupAudio(){
-
-    audioContext=new (window.AudioContext||window.webkitAudioContext)();
-
-    source=audioContext.createMediaElementSource(audio);
-
-    analyser=audioContext.createAnalyser();
-
-    analyser.fftSize=256;
-
-    source.connect(analyser);
-
-    analyser.connect(audioContext.destination);
-
-    frequencyData=new Uint8Array(analyser.frequencyBinCount);
-
-}
+});
 
 /*==================================================
 TIME UPDATE
@@ -215,23 +131,27 @@ TIME UPDATE
 
 audio.addEventListener("timeupdate",()=>{
 
-    currentTimeLabel.textContent=formatTime(audio.currentTime);
+    currentTimeLabel.textContent = formatTime(audio.currentTime);
 
     if(audio.duration){
 
-        const percent=(audio.currentTime/audio.duration)*100;
+        const percent = (audio.currentTime/audio.duration)*100;
 
-        seekFill.style.width=percent+"%";
+        seekFill.style.width = percent+"%";
 
-        seekThumb.style.left=percent+"%";
+        seekThumb.style.left = percent+"%";
 
     }
 
 });
-
 /*==================================================
-SEEKBAR
+NOCTIS PLAYER V2.2
+PARTE 2
 ==================================================*/
+
+/*==============================
+SEEKBAR
+==============================*/
 
 seekbar.addEventListener("click",(e)=>{
 
@@ -245,25 +165,9 @@ seekbar.addEventListener("click",(e)=>{
 
 });
 
-/*==================================================
-PREVIOUS / NEXT
-==================================================*/
-
-prev.addEventListener("click",()=>{
-
-    audio.currentTime=0;
-
-});
-
-next.addEventListener("click",()=>{
-
-    audio.currentTime=audio.duration;
-
-});
-
-/*==================================================
+/*==============================
 VOLUME
-==================================================*/
+==============================*/
 
 volume.addEventListener("input",()=>{
 
@@ -271,94 +175,158 @@ volume.addEventListener("input",()=>{
 
 });
 
-/*==================================================
+/*==============================
+PREV
+==============================*/
+
+prev.addEventListener("click",()=>{
+
+    audio.currentTime=0;
+
+});
+
+/*==============================
+NEXT
+==============================*/
+
+next.addEventListener("click",()=>{
+
+    audio.currentTime=audio.duration;
+
+});
+
+/*==============================
 VISUALIZER
-==================================================*/
+==============================*/
 
-function renderVisualizer(){
+let visualizerLoop=null;
 
-    if(audio.paused) return;
+function randomHeight(){
 
-    animationFrame=requestAnimationFrame(renderVisualizer);
+    return (Math.random()*0.9)+0.15;
 
-    analyser.getByteFrequencyData(frequencyData);
+}
 
-    ctx.clearRect(0,0,canvas.width,canvas.height);
+function animateBars(){
 
-    const bars=48;
+    if(audio.paused){
 
-    const spacing=4;
+        bars.forEach(bar=>{
 
-    const barWidth=(canvas.width-(bars-1)*spacing)/bars;
+            bar.style.transform="scaleY(.15)";
 
-    for(let i=0;i<bars;i++){
+            bar.style.opacity=".45";
 
-        const value=frequencyData[i]/255;
+        });
 
-        const height=Math.max(4,value*canvas.height);
-
-        const x=i*(barWidth+spacing);
-
-        const y=canvas.height-height;
-
-        const gradient=ctx.createLinearGradient(
-
-            0,
-
-            y,
-
-            0,
-
-            canvas.height
-
-        );
-
-        gradient.addColorStop(0,"rgba(255,255,255,.95)");
-
-        gradient.addColorStop(.5,"rgba(255,255,255,.70)");
-
-        gradient.addColorStop(1,"rgba(255,255,255,.20)");
-
-        ctx.fillStyle=gradient;
-
-        roundRect(
-
-            x,
-
-            y,
-
-            barWidth,
-
-            height,
-
-            4
-
-        );
+        return;
 
     }
 
-}
+    bars.forEach(bar=>{
 
-/*==================================================
-ROUNDED BAR
-==================================================*/
+        const h=randomHeight();
 
-function roundRect(x,y,w,h,r){
+        const o=0.45+Math.random()*0.55;
 
-    ctx.beginPath();
+        bar.style.transform=`scaleY(${h})`;
 
-    ctx.moveTo(x+r,y);
+        bar.style.opacity=o;
 
-    ctx.arcTo(x+w,y,x+w,y+h,r);
+    });
 
-    ctx.arcTo(x+w,y+h,x,y+h,r);
+    visualizerLoop=setTimeout(
 
-    ctx.arcTo(x,y+h,x,y,r);
+        animateBars,
 
-    ctx.arcTo(x,y,x+w,y,r);
+        120
 
-    ctx.closePath();
-
-    ctx.fill();
+    );
 
 }
+
+audio.addEventListener("play",()=>{
+
+    clearTimeout(visualizerLoop);
+
+    animateBars();
+
+});
+
+audio.addEventListener("pause",()=>{
+
+    clearTimeout(visualizerLoop);
+
+    bars.forEach(bar=>{
+
+        bar.style.transform="scaleY(.15)";
+
+        bar.style.opacity=".45";
+
+    });
+
+});
+
+/*==============================
+ENDED
+==============================*/
+
+audio.addEventListener("ended",()=>{
+
+    play.textContent="▶";
+
+    player.classList.remove("playing");
+
+});
+
+/*==============================
+STARTUP
+==============================*/
+
+bars.forEach(bar=>{
+
+    bar.style.transform="scaleY(.15)";
+
+    bar.style.opacity=".45";
+
+});
+
+volume.value=100;
+
+audio.volume=1;
+
+/*==============================
+AUTOPLAY EXTRA
+==============================*/
+
+document.addEventListener("visibilitychange",()=>{
+
+    if(
+
+        document.visibilityState==="visible" &&
+
+        audio.paused
+
+    ){
+
+        audio.play().catch(()=>{});
+
+    }
+
+});
+
+window.addEventListener("pageshow",()=>{
+
+    if(audio.paused){
+
+        audio.play().catch(()=>{});
+
+    }
+
+});
+
+/*==============================
+READY
+==============================*/
+
+console.log("Noctis Player V2.2 Ready");

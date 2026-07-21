@@ -1,105 +1,498 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
+:root{
 
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    --bg:#090909;
+    --card:rgba(22,22,22,.68);
+    --border:rgba(255,255,255,.08);
 
-<title>Noctis Player</title>
+    --text:#ffffff;
+    --sub:#bdbdbd;
 
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    --accent:#ffffff;
 
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+}
 
-<link rel="stylesheet" href="style.css">
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
 
-</head>
+html,
+body{
 
-<body>
+    width:100%;
+    height:100%;
 
-<div class="background"></div>
+}
 
-<div class="player">
+body{
 
-    <div class="album">
+    font-family:"Inter",sans-serif;
 
-        <img id="cover" src="cover.jpg" alt="Cover">
+    display:flex;
+    justify-content:center;
+    align-items:center;
 
-    </div>
+    overflow:hidden;
 
-    <div class="content">
+    background:var(--bg);
 
-        <div class="top">
+    color:var(--text);
 
-            <div>
+}
 
-                <h1 id="title">Eternally</h1>
+/*==============================
+BACKGROUND
+==============================*/
 
-                <h2 id="artist">Tomorrow X Together</h2>
+.background{
 
-            </div>
+    position:fixed;
+    inset:0;
 
-            <div class="status">
+    background:url("cover.jpg") center/cover no-repeat;
 
-                <span class="dot"></span>
+    transform:scale(1.35);
 
-                <span>PLAYING</span>
+    filter:
+        blur(80px)
+        brightness(.22)
+        saturate(1.35);
 
-            </div>
+}
 
-        </div>
+.background::after{
 
-        <canvas id="visualizer"></canvas>
+    content:"";
 
-        <div class="timeline">
+    position:absolute;
+    inset:0;
 
-            <span id="current">0:00</span>
+    background:linear-gradient(
 
-            <div class="progress" id="progress">
+        rgba(0,0,0,.25),
 
-                <div class="progress-fill" id="progressFill"></div>
+        rgba(0,0,0,.68)
 
-            </div>
+    );
 
-            <span id="duration">0:00</span>
+}
 
-        </div>
+/*==============================
+PLAYER
+==============================*/
 
-        <div class="bottom">
+.player{
 
-            <div class="controls">
+    position:relative;
 
-                <button id="prev">⏮</button>
+    width:min(930px,92vw);
 
-                <button id="play">▶</button>
+    min-height:235px;
 
-                <button id="next">⏭</button>
+    display:grid;
 
-            </div>
+    grid-template-columns:155px 1fr;
 
-            <div class="volume">
+    gap:32px;
 
-                🔊
+    padding:28px;
 
-                <input
-                    id="volume"
-                    type="range"
-                    min="0"
-                    max="100"
-                    value="100">
+    border-radius:30px;
 
-            </div>
+    overflow:hidden;
 
-        </div>
+    background:var(--card);
 
-    </div>
+    backdrop-filter:blur(28px);
 
-</div>
+    border:1px solid var(--border);
 
-<audio id="audio" src="song.mp3"></audio>
+    box-shadow:
 
-<script src="script.js"></script>
+        0 25px 60px rgba(0,0,0,.45);
 
-</body>
-</html>
+}
+
+/*==============================
+ALBUM
+==============================*/
+
+.album{
+
+    width:155px;
+    height:155px;
+
+    border-radius:24px;
+
+    overflow:hidden;
+
+    box-shadow:
+
+        0 15px 35px rgba(0,0,0,.45);
+
+}
+
+.album img{
+
+    width:100%;
+    height:100%;
+
+    object-fit:cover;
+
+    display:block;
+
+    transition:.45s;
+
+}
+
+.player.playing .album img{
+
+    transform:scale(1.05);
+
+}
+
+/*==============================
+CONTENT
+==============================*/
+
+.content{
+
+    display:flex;
+
+    flex-direction:column;
+
+    justify-content:space-between;
+
+    gap:18px;
+
+}
+
+/*==============================
+TOP
+==============================*/
+
+.top{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:flex-start;
+
+}
+
+h1{
+
+    font-size:2rem;
+
+    font-weight:700;
+
+}
+
+h2{
+
+    margin-top:6px;
+
+    color:var(--sub);
+
+    font-size:1rem;
+
+    font-weight:400;
+
+}
+
+/*==============================
+STATUS
+==============================*/
+
+.status{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:10px;
+
+    font-size:.78rem;
+
+    letter-spacing:.15em;
+
+    opacity:.8;
+
+}
+
+.dot{
+
+    width:8px;
+    height:8px;
+
+    border-radius:50%;
+
+    background:white;
+
+    animation:pulse 1.5s infinite;
+
+}
+
+/*==============================
+VISUALIZER
+==============================*/
+
+#visualizer{
+
+    width:100%;
+
+    height:55px;
+
+    border-radius:12px;
+
+    background:rgba(255,255,255,.03);
+
+}
+
+/*==============================
+TIMELINE
+==============================*/
+
+.timeline{
+
+    display:grid;
+
+    grid-template-columns:45px 1fr 45px;
+
+    align-items:center;
+
+    gap:14px;
+
+    font-size:.82rem;
+
+}
+
+.progress{
+
+    height:6px;
+
+    border-radius:999px;
+
+    overflow:hidden;
+
+    background:rgba(255,255,255,.12);
+
+    cursor:pointer;
+
+}
+
+.progress-fill{
+
+    width:0%;
+
+    height:100%;
+
+    background:white;
+
+    border-radius:999px;
+
+}
+
+/*==============================
+BOTTOM
+==============================*/
+
+.bottom{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+}
+
+/*==============================
+CONTROLS
+==============================*/
+
+.controls{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:14px;
+
+}
+
+.controls button{
+
+    border:none;
+
+    background:none;
+
+    color:white;
+
+    cursor:pointer;
+
+    font-size:1.2rem;
+
+    transition:.25s;
+
+}
+
+.controls button:hover{
+
+    transform:scale(1.1);
+
+}
+
+#play{
+
+    width:54px;
+
+    height:54px;
+
+    border-radius:50%;
+
+    background:white;
+
+    color:black;
+
+    font-size:1.35rem;
+
+    font-weight:bold;
+
+}
+
+/*==============================
+VOLUME
+==============================*/
+
+.volume{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:12px;
+
+}
+
+#volume{
+
+    width:120px;
+
+    accent-color:white;
+
+}
+
+/*==============================
+ANIMATION
+==============================*/
+
+.player{
+
+    animation:show .8s ease;
+
+}
+
+@keyframes show{
+
+    from{
+
+        opacity:0;
+
+        transform:
+
+            translateY(35px)
+
+            scale(.96);
+
+    }
+
+    to{
+
+        opacity:1;
+
+        transform:
+
+            translateY(0)
+
+            scale(1);
+
+    }
+
+}
+
+@keyframes pulse{
+
+    0%{
+
+        transform:scale(1);
+
+        opacity:1;
+
+    }
+
+    50%{
+
+        transform:scale(1.6);
+
+        opacity:.35;
+
+    }
+
+    100%{
+
+        transform:scale(1);
+
+        opacity:1;
+
+    }
+
+}
+
+/*==============================
+RESPONSIVE
+==============================*/
+
+@media(max-width:760px){
+
+.player{
+
+    grid-template-columns:1fr;
+
+    text-align:center;
+
+}
+
+.album{
+
+    margin:auto;
+
+}
+
+.top{
+
+    flex-direction:column;
+
+    align-items:center;
+
+    gap:18px;
+
+}
+
+.bottom{
+
+    flex-direction:column;
+
+    gap:20px;
+
+}
+
+.timeline{
+
+    grid-template-columns:42px 1fr 42px;
+
+}
+
+}

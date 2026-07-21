@@ -4,16 +4,14 @@
 <head>
 
 <meta charset="UTF-8">
-
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Noctis Player V4</title>
+<title>Noctis Player V5</title>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
-
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
 <link rel="stylesheet" href="style.css">
 
@@ -22,25 +20,30 @@
 <body>
 
 <div class="background"></div>
-
-<div class="background-overlay"></div>
+<div class="overlay"></div>
 
 <main class="player">
 
     <div class="glow"></div>
 
-    <section class="album">
+    <!-- COVER -->
+
+    <section class="cover">
 
         <img
             id="cover"
             src="cover.jpg"
-            alt="Cover">
+            alt="Album Cover">
 
     </section>
 
+    <!-- CONTENT -->
+
     <section class="content">
 
-        <header class="header">
+        <!-- TOP -->
+
+        <header class="top">
 
             <div class="song">
 
@@ -50,93 +53,130 @@
 
                 </h1>
 
-                <h2 id="artist">
+                <p id="artist">
 
                     Ji Pyoung Kwon
 
-                </h2>
+                </p>
 
             </div>
 
             <div class="status">
 
-                <span class="live-dot"></span>
+                <span class="dot"></span>
 
-                PLAYING
+                <span>
+
+                    PLAYING
+
+                </span>
 
             </div>
 
         </header>
 
-        <div
+        <!-- VISUALIZER -->
+
+        <section
             class="visualizer"
             id="visualizer">
 
             <span></span><span></span><span></span><span></span>
             <span></span><span></span><span></span><span></span>
-
             <span></span><span></span><span></span><span></span>
-            <span></span><span></span><span></span><span></span>
-
             <span></span><span></span><span></span><span></span>
             <span></span><span></span><span></span><span></span>
 
-        </div>
+        </section>
 
-        <section class="bottom">
+        <!-- TIMELINE -->
 
-            <section class="timeline">
+        <section class="timeline">
 
-                <span id="currentTime">
+            <span id="currentTime">
 
-                    0:00
+                0:00
 
-                </span>
+            </span>
 
-                <div
-                    class="seekbar"
-                    id="seekbar">
+            <div
+                id="seekbar"
+                class="seekbar">
 
-                    <div id="seekFill"></div>
+                <div id="seekFill"></div>
 
-                    <div id="seekThumb"></div>
+                <div id="seekThumb"></div>
 
-                </div>
+            </div>
 
-                <span id="duration">
+            <span id="duration">
 
-                    0:00
+                0:00
 
-                </span>
+            </span>
 
-            </section>
+        </section>
 
-            <section class="controls">
+        <!-- CONTROLS -->
 
-                <div class="buttons">
+        <section class="controls">
 
-                    <button id="prev">⏮</button>
+            <div class="left-controls">
 
-                    <button id="play">▶</button>
+                <button
+                    id="prev"
+                    class="icon-button"
+                    title="Anterior">
 
-                    <button id="next">⏭</button>
+                    ⏮
 
-                </div>
+                </button>
 
-                <div class="volume">
+                <button
+                    id="play"
+                    class="play-button"
+                    title="Play">
+
+                    ▶
+
+                </button>
+
+                <button
+                    id="next"
+                    class="icon-button"
+                    title="Siguiente">
+
+                    ⏭
+
+                </button>
+
+                <button
+                    id="loop"
+                    class="icon-button"
+                    title="Repetir">
+
+                    🔁
+
+                </button>
+
+            </div>
+
+            <div class="right-controls">
+
+                <span class="volume-icon">
 
                     🔊
 
-                    <input
-                        id="volume"
-                        type="range"
-                        min="0"
-                        max="100"
-                        value="100">
+                </span>
 
-                </div>
+                <input
+                    id="volume"
+                    type="range"
+                    min="0"
+                    max="100"
+                    value="100">
 
-            </section>
+            </div>
 
         </section>
 

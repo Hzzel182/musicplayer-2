@@ -2,103 +2,107 @@
     box-sizing: border-box;
     margin: 0;
     padding: 0;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
 }
 
 body {
     background-color: transparent;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
+    color: #e0e0e0;
     overflow: hidden;
 }
 
-.player-widget {
+.player-container {
     display: flex;
     align-items: center;
-    background: rgba(255, 255, 255, 0.85);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
+    background: #121214;
+    border: 1px solid #27272a;
     border-radius: 12px;
     padding: 10px 14px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
-    width: 280px;
+    width: 320px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
     gap: 12px;
-    border: 1px solid rgba(255, 255, 255, 0.4);
 }
 
-.cover-container {
-    width: 55px;
-    height: 55px;
+.album-art img {
+    width: 48px;
+    height: 48px;
     border-radius: 8px;
-    overflow: hidden;
-    flex-shrink: 0;
-}
-
-.cover-container img {
-    width: 100%;
-    height: 100%;
     object-fit: cover;
+    border: 1px solid #3f3f46;
 }
 
-.info-container {
+.track-info {
+    flex: 1;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
-    flex-grow: 1;
-    gap: 6px;
-    overflow: hidden;
+    gap: 4px;
+    min-width: 0;
 }
 
-.song-meta {
-    display: flex;
-    flex-direction: column;
-}
-
-.song-title {
+.track-title {
     font-size: 13px;
     font-weight: 600;
-    color: #222;
+    color: #f4f4f5;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
 }
 
-.artist-name {
+.track-artist {
     font-size: 11px;
-    color: #666;
+    color: #a1a1aa;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+}
+
+.progress-container {
+    background: #27272a;
+    border-radius: 4px;
+    height: 3px;
+    width: 100%;
+    cursor: pointer;
+    margin-top: 2px;
+}
+
+.progress-bar {
+    background: #e4e4e7;
+    border-radius: 4px;
+    height: 100%;
+    width: 0%;
+    transition: width 0.1s linear;
 }
 
 .controls {
     display: flex;
-    gap: 8px;
     align-items: center;
+    gap: 4px;
 }
 
-.controls button {
-    background: none;
+.control-btn {
+    background: transparent;
     border: none;
-    cursor: pointer;
+    color: #a1a1aa;
     font-size: 13px;
-    color: #444;
-    transition: color 0.2s, background 0.2s;
+    cursor: pointer;
+    width: 28px;
+    height: 28px;
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 26px;
-    height: 26px;
     border-radius: 50%;
+    transition: background 0.2s, color 0.2s;
 }
 
-.controls button:hover {
-    color: #000;
-    background: rgba(0, 0, 0, 0.06);
+.control-btn:hover {
+    background: #27272a;
+    color: #ffffff;
 }
 
-.controls button.active {
-    color: #2563eb;
+#repeat-btn.active {
+    color: #38bdf8;
 }

@@ -1,55 +1,63 @@
-document.addEventListener("DOMContentLoaded", () => {
-    const audio = document.getElementById("audio");
-    const playPauseBtn = document.getElementById("play-pause-btn");
-    const playIcon = document.getElementById("play-icon");
-    const repeatBtn = document.getElementById("repeat-btn");
+const audio = document.getElementById('audio');
+const playPauseBtn = document.getElementById('play-pause-btn');
+const playPauseIcon = document.getElementById('play-pause-icon');
+const repeatBtn = document.getElementById('repeat-btn');
+const progressBar = document.getElementById('progress-bar');
+const progressContainer = document.getElementById('progress-container');
 
-    audio.volume = 0.6;
-
-    // Intentar reproducción automática al cargar la página
+// Inicializar estado de reproducción y autoplay
+document.addEventListener('DOMContentLoaded', () => {
+    audio.volume = 0.8;
     audio.play().then(() => {
-        playIcon.classList.remove("fa-play");
-        playIcon.classList.add("fa-pause");
+        playPauseIcon.classList.remove('fa-play');
+        playPauseIcon.classList.add('fa-pause');
     }).catch(error => {
-        // Los navegadores modernos bloquean el autoplay con sonido si no hay interacción previa del usuario
         console.log("Autoplay bloqueado por políticas del navegador:", error);
-        playIcon.classList.remove("fa-pause");
-        playIcon.classList.add("fa-play");
+        playPauseIcon.classList.remove('fa-pause');
+        playPauseIcon.classList.add('fa-play');
     });
+});
 
-    // Control de Play / Pause
-    playPauseBtn.addEventListener("click", () => {
-        if (audio.paused) {
-            audio.play();
-            playIcon.classList.remove("fa-play");
-            playIcon.classList.add("fa-pause");
-        } else {
-            audio.pause();
-            playIcon.classList.remove("fa-pause");
-            playIcon.classList.add("fa-play");
-        }
-    });
-
-    // Estado inicial del botón de repetición (coincide con el atributo loop del HTML)
-    if (audio.loop) {
-        repeatBtn.classList.add("active");
+// Control de Play / Pause
+playPauseBtn.addEventListener('click', () => {
+    if (audio.paused) {
+        audio.play();
+        playPauseIcon.classList.remove('fa-play');
+        playPauseIcon.classList.add('fa-pause');
+    } else {
+        audio.pause();
+        playPauseIcon.classList.remove('fa-pause');
+        playPauseIcon.classList.add('fa-play');
     }
+});
 
-    // Control de Repetición (Loop)
-    repeatBtn.addEventListener("click", () => {
-        audio.loop = !audio.loop;
-        if (audio.loop) {
-            repeatBtn.classList.add("active");
-        } else {
-            repeatBtn.classList.remove("active");
-        }
-    });
+// Control de Repetir (Loop)
+repeatBtn.addEventListener('click', () => {
+    audio.loop = !audio.loop;
+    repeatBtn.classList.toggle('active', audio.loop);
+});
 
-    // Sincronizar el icono si la canción termina y no está en bucle
-    audio.addEventListener("ended", () => {
-        if (!audio.loop) {
-            playIcon.classList.remove("fa-pause");
-            playIcon.classList.add("fa-play");
-        }
-    });
+// Actualizar barra de progreso
+audio.addEventListener('timeupdate', () => {
+    const { currentTime, duration } = audio;
+    if (duration) {
+        const progressPercent = (currentTime / duration) * 100;
+        progressBar.style.width = `${progressPercent}%`;
+    }
+});
+
+// Permitir saltar en la canción haciendo clic en la barra
+progressContainer.addEventListener('click', (e) => {
+    const width = progressContainer.clientWidth;
+    const clickX = e.offsetX;
+    const duration = audio.duration;
+    audio.currentTime = (clickX / width) * duration;
+});
+
+// Sincronizar icono si termina y el loop está desactivado
+audio.addEventListener('ended', () => {
+    if (!audio.loop) {
+        playPauseIcon.classList.remove('fa-pause');
+        playPauseIcon.classList.add('fa-play');
+    }
 });

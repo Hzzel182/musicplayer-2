@@ -1,27 +1,18 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
 
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<meta name="viewport"
-content="width=device-width,initial-scale=1.0">
+<title>Music Player</title>
 
-<title>Premium Music Player</title>
+<link rel="stylesheet" href="style.css">
 
-<link rel="preconnect"
-href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-<link rel="preconnect"
-href="https://fonts.gstatic.com"
-crossorigin>
-
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
-rel="stylesheet">
-
-<link rel="stylesheet"
-href="style.css">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
 </head>
 
@@ -31,112 +22,98 @@ href="style.css">
 
 <div class="player">
 
-<div class="glass">
+    <div class="cover">
 
-<!-- PORTADA -->
+        <img src="cover.jpg" id="cover">
 
-<div class="cover">
+    </div>
 
-<img
-id="cover"
-src="cover.jpg"
-alt="cover">
+    <div class="content">
 
-</div>
+        <div class="top">
 
-<!-- INFORMACIÓN -->
+            <div class="titles">
 
-<div class="content">
+                <h1 id="title">Eternally</h1>
 
-<div class="header">
+                <p id="artist">TXT</p>
 
-<h1 id="title">
+            </div>
 
-Eternally
+            <canvas id="visualizer"></canvas>
 
-</h1>
+        </div>
 
-<p id="artist">
+        <div class="progress-area">
 
-TXT
+            <span id="current">0:00</span>
 
-</p>
+            <div class="progress">
 
-</div>
+                <div class="progress-fill"></div>
 
-<div class="visualizer">
+                <div class="progress-dot"></div>
 
-<span></span><span></span><span></span><span></span>
-<span></span><span></span><span></span><span></span>
-<span></span><span></span><span></span><span></span>
-<span></span><span></span><span></span><span></span>
+            </div>
 
-</div>
+            <span id="duration">0:00</span>
 
-<div class="progress">
+        </div>
 
-<span id="current">
+        <div class="bottom">
 
-0:00
+            <div class="controls">
 
-</span>
+                <button id="prev">
 
-<div id="progressBar">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M18 6v12l-8.5-6zM6 6h2v12H6z"/>
+                    </svg>
 
-<div id="progressFill"></div>
+                </button>
 
-<div id="progressThumb"></div>
+                <button id="play">
 
-</div>
+                    <svg id="playIcon" viewBox="0 0 24 24">
+                        <path d="M8 5v14l11-7z"/>
+                    </svg>
 
-<span id="duration">
+                </button>
 
-0:00
+                <button id="next">
 
-</span>
+                    <svg viewBox="0 0 24 24">
+                        <path d="M6 6v12l8.5-6zM16 6h2v12h-2z"/>
+                    </svg>
 
-</div>
+                </button>
 
-<div class="controls">
+            </div>
 
-<button id="previous">
+            <div class="volume">
 
-◀◀
+                <svg viewBox="0 0 24 24">
+                    <path d="M5 9v6h4l5 5V4L9 9H5z"/>
+                </svg>
 
-</button>
+                <input
+                type="range"
+                min="0"
+                max="100"
+                value="100"
+                id="volume">
 
-<button id="play">
+            </div>
 
-▶
+        </div>
 
-</button>
-
-<button id="next">
-
-▶▶
-
-</button>
-
-</div>
-
-</div>
+    </div>
 
 </div>
 
-</div>
-
-<audio
-id="audio"
-preload="metadata">
-
-<source
-src="song.mp3"
-type="audio/mpeg">
-
-</audio>
+<audio id="audio" src="song.mp3"></audio>
 
 <script src="script.js"></script>
 
 </body>
-
 </html>

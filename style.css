@@ -1,102 +1,82 @@
-/* ======================================================
-   PREMIUM MUSIC PLAYER
-   by ChatGPT
-====================================================== */
-
-:root{
-
-    --accent:#7c5cff;
-    --text:#ffffff;
-    --text2:#b7b7b7;
-
-    --glass:rgba(255,255,255,.08);
-
-    --glass-border:rgba(255,255,255,.12);
-
-    --radius:28px;
-
-}
+/* ===========================
+   RESET
+=========================== */
 
 *{
-
     margin:0;
-
     padding:0;
-
     box-sizing:border-box;
-
 }
 
 html,
 body{
-
     width:100%;
-
     height:100%;
-
-    overflow:hidden;
-
 }
 
 body{
 
+    font-family:'Inter',sans-serif;
+
     display:flex;
-
     justify-content:center;
-
     align-items:center;
-
-    font-family:"Inter",sans-serif;
 
     background:#050505;
 
+    overflow:hidden;
+
+    color:white;
 }
 
-/*============================*/
+
+/* ===========================
+   FONDO
+=========================== */
 
 .background{
 
     position:fixed;
+    inset:0;
 
+    background-image:url("cover.jpg");
+    background-size:cover;
+    background-position:center;
+
+    transform:scale(1.25);
+
+    filter:blur(60px) brightness(.35);
+
+    z-index:-2;
+
+}
+
+.background::after{
+
+    content:"";
+
+    position:absolute;
     inset:0;
 
     background:
-
-    url("cover.jpg")
-
-    center center /
-
-    cover;
-
-    filter:
-
-    blur(90px)
-
-    brightness(.35);
-
-    transform:
-
-    scale(1.2);
+    radial-gradient(circle at center,
+    rgba(255,255,255,.06),
+    rgba(0,0,0,.55));
 
 }
 
-/*============================*/
+
+/* ===========================
+   PLAYER
+=========================== */
 
 .player{
 
-    width:min(860px,96vw);
+    width:min(900px,92vw);
 
-    position:relative;
-
-    z-index:10;
-
-}
-
-.glass{
+    height:180px;
 
     display:flex;
-
-    align-items:center;
 
     gap:28px;
 
@@ -104,102 +84,58 @@ body{
 
     border-radius:28px;
 
+    background:rgba(255,255,255,.08);
+
     backdrop-filter:blur(30px);
 
-    -webkit-backdrop-filter:blur(30px);
-
-    background:var(--glass);
-
-    border:1px solid var(--glass-border);
+    border:1px solid rgba(255,255,255,.12);
 
     box-shadow:
 
-    0 25px 70px rgba(0,0,0,.45);
+    0 25px 60px rgba(0,0,0,.45),
+
+    inset 0 1px 0 rgba(255,255,255,.12);
 
 }
-/*==================================================
-  COVER
-==================================================*/
+
+
+/* ===========================
+   COVER
+=========================== */
 
 .cover{
 
-    width:140px;
+    width:136px;
 
-    height:140px;
+    height:136px;
 
     flex-shrink:0;
 
-    position:relative;
+    border-radius:22px;
+
+    overflow:hidden;
+
+    box-shadow:
+
+    0 18px 45px rgba(0,0,0,.45);
 
 }
 
-.cover::before{
-
-    content:"";
-
-    position:absolute;
-
-    inset:-18px;
-
-    border-radius:34px;
-
-    background:
-
-    radial-gradient(circle,
-    rgba(124,92,255,.45),
-    transparent 70%);
-
-    filter:blur(35px);
-
-    z-index:-1;
-
-}
-
-#cover{
+.cover img{
 
     width:100%;
-
     height:100%;
 
     object-fit:cover;
 
-    border-radius:24px;
-
     display:block;
 
-    box-shadow:
-
-        0 18px 40px rgba(0,0,0,.45);
-
-    transition:.45s;
-
 }
 
-.playing #cover{
 
-    animation:rotateCover 18s linear infinite;
-
-}
-
-@keyframes rotateCover{
-
-    from{
-
-        transform:rotate(0deg);
-
-    }
-
-    to{
-
-        transform:rotate(360deg);
-
-    }
-
-}
-
-/*==================================================
-  CONTENT
-==================================================*/
+/* ===========================
+   CONTENIDO
+=========================== */
 
 .content{
 
@@ -209,99 +145,313 @@ body{
 
     flex-direction:column;
 
-    justify-content:center;
-
-    gap:16px;
-
-    min-width:0;
+    justify-content:space-between;
 
 }
 
-.header h1{
 
-    font-size:2rem;
+/* ===========================
+   TITULOS
+=========================== */
 
-    font-weight:700;
-
-    color:white;
-
-    letter-spacing:-.03em;
-
-}
-
-.header p{
-
-    margin-top:6px;
-
-    color:#b9b9b9;
-
-    font-size:1rem;
-
-    font-weight:500;
-
-}
-
-/*==================================================
-  VISUALIZER
-==================================================*/
-
-.visualizer{
+.top{
 
     display:flex;
 
-    align-items:flex-end;
+    justify-content:space-between;
 
-    gap:4px;
+    align-items:flex-start;
 
-    height:28px;
-
-}
-
-.visualizer span{
-
-    width:4px;
-
-    border-radius:99px;
-
-    background:linear-gradient(
-        to top,
-        #7c5cff,
-        #b98cff
-    );
-
-    animation:bars 1.1s ease-in-out infinite;
+    gap:25px;
 
 }
 
-.visualizer span:nth-child(1){height:12px;animation-delay:.1s;}
-.visualizer span:nth-child(2){height:22px;animation-delay:.2s;}
-.visualizer span:nth-child(3){height:16px;animation-delay:.3s;}
-.visualizer span:nth-child(4){height:28px;animation-delay:.4s;}
-.visualizer span:nth-child(5){height:14px;animation-delay:.5s;}
-.visualizer span:nth-child(6){height:18px;animation-delay:.6s;}
-.visualizer span:nth-child(7){height:26px;animation-delay:.4s;}
-.visualizer span:nth-child(8){height:12px;animation-delay:.2s;}
-.visualizer span:nth-child(9){height:20px;animation-delay:.5s;}
-.visualizer span:nth-child(10){height:15px;animation-delay:.3s;}
-.visualizer span:nth-child(11){height:25px;animation-delay:.6s;}
-.visualizer span:nth-child(12){height:13px;animation-delay:.2s;}
-.visualizer span:nth-child(13){height:18px;animation-delay:.5s;}
-.visualizer span:nth-child(14){height:24px;animation-delay:.1s;}
-.visualizer span:nth-child(15){height:16px;animation-delay:.3s;}
-.visualizer span:nth-child(16){height:20px;animation-delay:.4s;}
+.titles h1{
 
-@keyframes bars{
+    font-size:28px;
 
-    0%,100%{
+    font-weight:700;
 
-        transform:scaleY(.45);
+    letter-spacing:-1px;
 
-    }
+}
 
-    50%{
+.titles p{
 
-        transform:scaleY(1);
+    margin-top:5px;
 
-    }
+    font-size:15px;
+
+    color:rgba(255,255,255,.70);
+
+}
+
+
+/* ===========================
+   VISUALIZER
+=========================== */
+
+#visualizer{
+
+    width:220px;
+
+    height:60px;
+
+    opacity:.9;
+
+}
+
+
+/* ===========================
+   BARRA
+=========================== */
+
+.progress-area{
+
+    display:grid;
+
+    grid-template-columns:48px 1fr 48px;
+
+    gap:14px;
+
+    align-items:center;
+
+}
+
+.progress{
+
+    position:relative;
+
+    height:6px;
+
+    border-radius:999px;
+
+    background:rgba(255,255,255,.10);
+
+    cursor:pointer;
+
+}
+
+.progress-fill{
+
+    position:absolute;
+
+    left:0;
+    top:0;
+
+    width:0%;
+
+    height:100%;
+
+    border-radius:999px;
+
+    background:linear-gradient(90deg,#ffffff,#bdbdbd);
+
+}
+
+.progress-dot{
+
+    position:absolute;
+
+    top:50%;
+    left:0%;
+
+    width:14px;
+
+    height:14px;
+
+    border-radius:50%;
+
+    transform:translate(-50%,-50%);
+
+    background:white;
+
+    box-shadow:
+
+    0 0 18px rgba(255,255,255,.45);
+
+}
+
+#current,
+#duration{
+
+    font-size:13px;
+
+    color:rgba(255,255,255,.65);
+
+}
+
+
+/* ===========================
+   INFERIOR
+=========================== */
+
+.bottom{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+}
+
+
+/* ===========================
+   BOTONES
+=========================== */
+
+.controls{
+
+    display:flex;
+
+    gap:16px;
+
+    align-items:center;
+
+}
+
+.controls button{
+
+    width:46px;
+
+    height:46px;
+
+    border:none;
+
+    border-radius:50%;
+
+    cursor:pointer;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    background:rgba(255,255,255,.08);
+
+    transition:.25s;
+
+}
+
+.controls button:hover{
+
+    transform:translateY(-2px);
+
+    background:rgba(255,255,255,.15);
+
+}
+
+#play{
+
+    width:58px;
+
+    height:58px;
+
+    background:white;
+
+}
+
+#play svg{
+
+    fill:#111;
+
+}
+
+.controls svg{
+
+    width:22px;
+
+    height:22px;
+
+    fill:white;
+
+}
+
+
+/* ===========================
+   VOLUMEN
+=========================== */
+
+.volume{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:14px;
+
+}
+
+.volume svg{
+
+    width:18px;
+
+    height:18px;
+
+    fill:white;
+
+    opacity:.8;
+
+}
+
+#volume{
+
+    width:120px;
+
+    accent-color:white;
+
+}
+
+
+/* ===========================
+   RESPONSIVE
+=========================== */
+
+@media(max-width:700px){
+
+.player{
+
+height:auto;
+
+flex-direction:column;
+
+align-items:center;
+
+}
+
+.cover{
+
+width:180px;
+height:180px;
+
+}
+
+.top{
+
+flex-direction:column;
+
+align-items:center;
+
+text-align:center;
+
+}
+
+.bottom{
+
+width:100%;
+
+flex-direction:column;
+
+gap:18px;
+
+}
+
+#visualizer{
+
+display:none;
+
+}
 
 }

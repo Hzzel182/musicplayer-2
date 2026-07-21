@@ -1,6 +1,7 @@
-/* ===========================
-   RESET
-=========================== */
+/* ==========================================
+   NOCTIS PLAYER V2
+   BASE
+========================================== */
 
 *{
     margin:0;
@@ -16,42 +17,42 @@ body{
 
 body{
 
-    font-family:'Inter',sans-serif;
+    font-family:"Inter",sans-serif;
 
     display:flex;
     justify-content:center;
     align-items:center;
 
-    background:#050505;
-
     overflow:hidden;
 
-    color:white;
+    background:#090909;
+
+    color:#fff;
+
 }
 
+/* ==========================================
+   BACKGROUND
+========================================== */
 
-/* ===========================
-   FONDO
-=========================== */
-
-.background{
+.bg{
 
     position:fixed;
     inset:0;
 
-    background-image:url("cover.jpg");
-    background-size:cover;
-    background-position:center;
+    background:url("cover.jpg") center/cover no-repeat;
 
-    transform:scale(1.25);
+    transform:scale(1.35);
 
-    filter:blur(60px) brightness(.35);
+    filter:
 
-    z-index:-2;
+        blur(80px)
+        brightness(.25)
+        saturate(1.4);
 
 }
 
-.background::after{
+.bg::before{
 
     content:"";
 
@@ -59,69 +60,109 @@ body{
     inset:0;
 
     background:
-    radial-gradient(circle at center,
-    rgba(255,255,255,.06),
-    rgba(0,0,0,.55));
+
+    radial-gradient(circle at 20% 30%,
+    rgba(255,255,255,.08),
+    transparent 45%),
+
+    linear-gradient(
+    180deg,
+    rgba(0,0,0,.15),
+    rgba(0,0,0,.65));
 
 }
 
-
-/* ===========================
+/* ==========================================
    PLAYER
-=========================== */
+========================================== */
 
 .player{
 
-    width:min(900px,92vw);
+    position:relative;
 
-    height:180px;
+    width:min(920px,92vw);
+
+    min-height:210px;
 
     display:flex;
 
-    gap:28px;
+    gap:34px;
 
-    padding:22px;
+    padding:28px;
 
-    border-radius:28px;
+    border-radius:34px;
 
-    background:rgba(255,255,255,.08);
+    overflow:hidden;
 
-    backdrop-filter:blur(30px);
+    background:
 
-    border:1px solid rgba(255,255,255,.12);
+        rgba(255,255,255,.08);
+
+    border:1px solid rgba(255,255,255,.10);
+
+    backdrop-filter:
+
+        blur(30px)
+        saturate(180%);
 
     box-shadow:
 
-    0 25px 60px rgba(0,0,0,.45),
+        0 30px 80px rgba(0,0,0,.55),
 
-    inset 0 1px 0 rgba(255,255,255,.12);
+        inset 0 1px 0 rgba(255,255,255,.08);
 
 }
 
+/* ==========================================
+   GLOW
+========================================== */
 
-/* ===========================
-   COVER
-=========================== */
+.glow{
 
-.cover{
+    position:absolute;
 
-    width:136px;
+    width:380px;
+    height:380px;
 
-    height:136px;
+    left:-120px;
+    top:-80px;
+
+    border-radius:50%;
+
+    background:
+
+    radial-gradient(circle,
+    rgba(255,255,255,.10),
+    transparent 70%);
+
+    filter:blur(30px);
+
+    pointer-events:none;
+
+}
+
+/* ==========================================
+   ALBUM
+========================================== */
+
+.album{
+
+    width:150px;
+    height:150px;
 
     flex-shrink:0;
 
-    border-radius:22px;
+    border-radius:26px;
 
     overflow:hidden;
 
     box-shadow:
 
-    0 18px 45px rgba(0,0,0,.45);
+        0 18px 45px rgba(0,0,0,.45);
 
 }
 
-.cover img{
+.album img{
 
     width:100%;
     height:100%;
@@ -130,14 +171,23 @@ body{
 
     display:block;
 
+    transition:
+
+        transform .6s ease;
+
 }
 
+.player.playing .album img{
 
-/* ===========================
-   CONTENIDO
-=========================== */
+    transform:scale(1.05);
 
-.content{
+}
+
+/* ==========================================
+   INFO
+========================================== */
+
+.info{
 
     flex:1;
 
@@ -146,312 +196,5 @@ body{
     flex-direction:column;
 
     justify-content:space-between;
-
-}
-
-
-/* ===========================
-   TITULOS
-=========================== */
-
-.top{
-
-    display:flex;
-
-    justify-content:space-between;
-
-    align-items:flex-start;
-
-    gap:25px;
-
-}
-
-.titles h1{
-
-    font-size:28px;
-
-    font-weight:700;
-
-    letter-spacing:-1px;
-
-}
-
-.titles p{
-
-    margin-top:5px;
-
-    font-size:15px;
-
-    color:rgba(255,255,255,.70);
-
-}
-
-
-/* ===========================
-   VISUALIZER
-=========================== */
-
-#visualizer{
-
-    width:220px;
-
-    height:60px;
-
-    opacity:.9;
-
-}
-
-
-/* ===========================
-   BARRA
-=========================== */
-
-.progress-area{
-
-    display:grid;
-
-    grid-template-columns:48px 1fr 48px;
-
-    gap:14px;
-
-    align-items:center;
-
-}
-
-.progress{
-
-    position:relative;
-
-    height:6px;
-
-    border-radius:999px;
-
-    background:rgba(255,255,255,.10);
-
-    cursor:pointer;
-
-}
-
-.progress-fill{
-
-    position:absolute;
-
-    left:0;
-    top:0;
-
-    width:0%;
-
-    height:100%;
-
-    border-radius:999px;
-
-    background:linear-gradient(90deg,#ffffff,#bdbdbd);
-
-}
-
-.progress-dot{
-
-    position:absolute;
-
-    top:50%;
-    left:0%;
-
-    width:14px;
-
-    height:14px;
-
-    border-radius:50%;
-
-    transform:translate(-50%,-50%);
-
-    background:white;
-
-    box-shadow:
-
-    0 0 18px rgba(255,255,255,.45);
-
-}
-
-#current,
-#duration{
-
-    font-size:13px;
-
-    color:rgba(255,255,255,.65);
-
-}
-
-
-/* ===========================
-   INFERIOR
-=========================== */
-
-.bottom{
-
-    display:flex;
-
-    justify-content:space-between;
-
-    align-items:center;
-
-}
-
-
-/* ===========================
-   BOTONES
-=========================== */
-
-.controls{
-
-    display:flex;
-
-    gap:16px;
-
-    align-items:center;
-
-}
-
-.controls button{
-
-    width:46px;
-
-    height:46px;
-
-    border:none;
-
-    border-radius:50%;
-
-    cursor:pointer;
-
-    display:flex;
-
-    align-items:center;
-
-    justify-content:center;
-
-    background:rgba(255,255,255,.08);
-
-    transition:.25s;
-
-}
-
-.controls button:hover{
-
-    transform:translateY(-2px);
-
-    background:rgba(255,255,255,.15);
-
-}
-
-#play{
-
-    width:58px;
-
-    height:58px;
-
-    background:white;
-
-}
-
-#play svg{
-
-    fill:#111;
-
-}
-
-.controls svg{
-
-    width:22px;
-
-    height:22px;
-
-    fill:white;
-
-}
-
-
-/* ===========================
-   VOLUMEN
-=========================== */
-
-.volume{
-
-    display:flex;
-
-    align-items:center;
-
-    gap:14px;
-
-}
-
-.volume svg{
-
-    width:18px;
-
-    height:18px;
-
-    fill:white;
-
-    opacity:.8;
-
-}
-
-#volume{
-
-    width:120px;
-
-    accent-color:white;
-
-}
-
-
-/* ===========================
-   RESPONSIVE
-=========================== */
-
-@media(max-width:700px){
-
-.player{
-
-height:auto;
-
-flex-direction:column;
-
-align-items:center;
-
-}
-
-.cover{
-
-width:180px;
-height:180px;
-
-}
-
-.top{
-
-flex-direction:column;
-
-align-items:center;
-
-text-align:center;
-
-}
-
-.bottom{
-
-width:100%;
-
-flex-direction:column;
-
-gap:18px;
-
-}
-
-#visualizer{
-
-display:none;
-
-}
 
 }

@@ -4,14 +4,16 @@
 <head>
 
 <meta charset="UTF-8">
+
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Noctis Player</title>
+<title>Noctis Player V4</title>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
+
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
 <link rel="stylesheet" href="style.css">
 
@@ -32,7 +34,7 @@
         <img
             id="cover"
             src="cover.jpg"
-            alt="Album Cover">
+            alt="Cover">
 
     </section>
 
@@ -42,9 +44,17 @@
 
             <div class="song">
 
-                <h1 id="title">Eternally</h1>
+                <h1 id="title">
 
-                <h2 id="artist">Ji Pyoung Kwon</h2>
+                    Eternally
+
+                </h1>
+
+                <h2 id="artist">
+
+                    Ji Pyoung Kwon
+
+                </h2>
 
             </div>
 
@@ -52,16 +62,15 @@
 
                 <span class="live-dot"></span>
 
-                <span>PLAYING</span>
+                PLAYING
 
             </div>
 
         </header>
 
-        <div class="visualizer" id="visualizer">
-
-            <span></span><span></span><span></span><span></span>
-            <span></span><span></span><span></span><span></span>
+        <div
+            class="visualizer"
+            id="visualizer">
 
             <span></span><span></span><span></span><span></span>
             <span></span><span></span><span></span><span></span>
@@ -74,48 +83,62 @@
 
         </div>
 
-        <section class="timeline">
+        <section class="bottom">
 
-            <span id="currentTime">0:00</span>
+            <section class="timeline">
 
-            <div class="seekbar" id="seekbar">
+                <span id="currentTime">
 
-                <div id="seekFill"></div>
+                    0:00
 
-                <div id="seekThumb"></div>
+                </span>
 
-            </div>
+                <div
+                    class="seekbar"
+                    id="seekbar">
 
-            <span id="duration">0:00</span>
+                    <div id="seekFill"></div>
+
+                    <div id="seekThumb"></div>
+
+                </div>
+
+                <span id="duration">
+
+                    0:00
+
+                </span>
+
+            </section>
+
+            <section class="controls">
+
+                <div class="buttons">
+
+                    <button id="prev">⏮</button>
+
+                    <button id="play">▶</button>
+
+                    <button id="next">⏭</button>
+
+                </div>
+
+                <div class="volume">
+
+                    🔊
+
+                    <input
+                        id="volume"
+                        type="range"
+                        min="0"
+                        max="100"
+                        value="100">
+
+                </div>
+
+            </section>
 
         </section>
-
-        <footer class="controls">
-
-            <div class="buttons">
-
-                <button id="prev">⏮</button>
-
-                <button id="play">▶</button>
-
-                <button id="next">⏭</button>
-
-            </div>
-
-            <div class="volume">
-
-                <span>🔊</span>
-
-                <input
-                    id="volume"
-                    type="range"
-                    min="0"
-                    max="100"
-                    value="100">
-
-            </div>
-
-        </footer>
 
     </section>
 
@@ -126,7 +149,9 @@
     preload="auto"
     playsinline>
 
-    <source src="song.mp3" type="audio/mpeg">
+    <source
+        src="song.mp3"
+        type="audio/mpeg">
 
 </audio>
 

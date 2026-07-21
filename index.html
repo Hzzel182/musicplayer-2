@@ -1,16 +1,17 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
+
 <head>
 
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Noctis Player</title>
+<title>Noctis Player V2.1</title>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
 <link rel="stylesheet" href="style.css">
 
@@ -20,19 +21,26 @@
 
 <div class="background"></div>
 
-<div class="player">
+<div class="background-overlay"></div>
 
-    <div class="album">
+<main class="player">
 
-        <img id="cover" src="cover.jpg" alt="Cover">
+    <div class="glow"></div>
 
-    </div>
+    <section class="album">
 
-    <div class="content">
+        <img
+            id="cover"
+            src="cover.jpg"
+            alt="Album Cover">
 
-        <div class="top">
+    </section>
 
-            <div>
+    <section class="content">
+
+        <header class="header">
+
+            <div class="song">
 
                 <h1 id="title">Eternally</h1>
 
@@ -42,45 +50,59 @@
 
             <div class="status">
 
-                <span class="dot"></span>
+                <span class="live-dot"></span>
 
                 <span>PLAYING</span>
 
             </div>
 
-        </div>
+        </header>
 
         <canvas id="visualizer"></canvas>
 
-        <div class="timeline">
+        <section class="timeline">
 
-            <span id="current">0:00</span>
+            <span id="currentTime">0:00</span>
 
-            <div class="progress" id="progress">
+            <div class="seekbar" id="seekbar">
 
-                <div class="progress-fill" id="progressFill"></div>
+                <div id="seekFill"></div>
+
+                <div id="seekThumb"></div>
 
             </div>
 
             <span id="duration">0:00</span>
 
-        </div>
+        </section>
 
-        <div class="bottom">
+        <footer class="controls">
 
-            <div class="controls">
+            <div class="buttons">
 
-                <button id="prev">⏮</button>
+                <button id="prev" aria-label="Anterior">
 
-                <button id="play">▶</button>
+                    ⏮
 
-                <button id="next">⏭</button>
+                </button>
+
+                <button id="play" aria-label="Play">
+
+                    ▶
+
+                </button>
+
+                <button id="next" aria-label="Siguiente">
+
+                    ⏭
+
+                </button>
 
             </div>
 
             <div class="volume">
 
-                🔊
+                <span>🔊</span>
 
                 <input
                     id="volume"
@@ -91,15 +113,22 @@
 
             </div>
 
-        </div>
+        </footer>
 
-    </div>
+    </section>
 
-</div>
+</main>
 
-<audio id="audio" src="song.mp3"></audio>
+<audio
+    id="audio"
+    preload="auto">
+
+    <source src="song.mp3" type="audio/mpeg">
+
+</audio>
 
 <script src="script.js"></script>
 
 </body>
+
 </html>
